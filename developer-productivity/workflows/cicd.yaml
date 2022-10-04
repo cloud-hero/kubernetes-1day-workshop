@@ -1,0 +1,133 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: app-pipeline-
+spec:
+  arguments:
+    parameters:
+    - name: redTag
+      value: red-1
+    - name: greenTag
+      value: green-1
+    - name: blueTag
+      value: blue-1
+    - name: image
+      value: 192.168.56.4:5000/rgb-nginx
+    - name: repo
+      value: "https://github.com/cloud-hero/cncf-ro-demo.git"
+    - name: context
+      value: rgb-containers
+    - name: revision
+      value: master
+    - name: chart
+      value: cncf-chart
+    - name: chart_repo
+      value: cncf-charts
+    - name: chart_repo_url
+      value: "https://cncf-ro-charts.s3.eu-central-1.amazonaws.com/stable/cncf-chart"
+  entrypoint: app-pipeline
+  templates:
+  - name: app-pipeline
+    steps:
+    - - name: build-red
+        templateRef: 
+          name: ci-docker
+          template: ci-docker
+        arguments:
+          parameters:
+            - name: image
+              value: "{{workflow.parameters.image}}"
+            - name: tag
+              value: "{{workflow.parameters.redTag}}"
+            - name: context
+              value: "{{workflow.parameters.context}}"
+            - name: dockerfile
+              value: "Dockerfile-red"
+            - name: repo
+              value: "{{workflow.parameters.repo}}"
+            - name: revision
+              value: "{{workflow.parameters.revision}}"
+      - name: build-green
+        templateRef: 
+          name: ci-docker
+          template: ci-docker
+        arguments:
+          parameters:
+            - name: image
+              value: "{{workflow.parameters.image}}"
+            - name: tag
+              value: "{{workflow.parameters.greenTag}}"
+            - name: context
+              value: "{{workflow.parameters.context}}"
+            - name: dockerfile
+              value: "Dockerfile-green"
+            - name: repo
+              value: "{{workflow.parameters.repo}}"
+            - name: revision
+              value: "{{workflow.parameters.revision}}"
+      - name: build-blue
+        templateRef: 
+          name: ci-docker
+          template: ci-docker
+        arguments:
+          parameters:
+            - name: image
+              value: "{{workflow.parameters.image}}"
+            - name: tag
+              value: "{{workflow.parameters.blueTag}}"
+            - name: context
+              value: "{{workflow.parameters.context}}"
+            - name: dockerfile
+              value: "Dockerfile-blue"
+            - name: repo
+              value: "{{workflow.parameters.repo}}"
+            - name: revision
+              value: "{{workflow.parameters.revision}}"
+    - - name: deploy-red
+        templateRef: 
+          name: cd-helm
+          template: cd-helm
+        arguments:
+          parameters:
+            - name: tag
+              value: "{{workflow.parameters.redTag}}"
+            - name: release
+              value: red
+            - name: chart
+              value: "{{workflow.parameters.chart}}"
+            - name: chart_repo
+              value: "{{workflow.parameters.chart_repo}}"
+            - name: chart_repo_url
+              value: "{{workflow.parameters.chart_repo_url}}"
+      - name: deploy-green
+        templateRef: 
+          name: cd-helm
+          template: cd-helm
+        arguments:
+          parameters:
+            - name: tag
+              value: "{{workflow.parameters.greenTag}}"
+            - name: release
+              value: green
+            - name: chart
+              value: "{{workflow.parameters.chart}}"
+            - name: chart_repo
+              value: "{{workflow.parameters.chart_repo}}"
+            - name: chart_repo_url
+              value: "{{workflow.parameters.chart_repo_url}}"
+      - name: deploy-blue
+        templateRef: 
+          name: cd-helm
+          template: cd-helm
+        arguments:
+          parameters:
+            - name: tag
+              value: "{{workflow.parameters.blueTag}}"
+            - name: release
+              value: blue
+            - name: chart
+              value: "{{workflow.parameters.chart}}"
+            - name: chart_repo
+              value: "{{workflow.parameters.chart_repo}}"
+            - name: chart_repo_url
+              value: "{{workflow.parameters.chart_repo_url}}"

@@ -1,0 +1,66 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: red-ingress-prefix
+  namespace: red
+  annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "colour.ko2.com"
+    http:
+      paths:
+      - path: /red
+        pathType: Prefix
+        backend:
+          service:
+            name: red-svc-ci
+            port:
+              number: 80
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: green-ingress-prefix
+  namespace: green
+  annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "colour.ko2.com"
+    http:
+      paths:
+      - path: /green
+        pathType: Prefix
+        backend:
+          service:
+            name: green-svc-ci
+            port:
+              number: 80
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: blue-ingress-prefix
+  namespace: blue
+  annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "colour.ko2.com"
+    http:
+      paths:
+      - path: /blue
+        pathType: Prefix
+        backend:
+          service:
+            name: blue-svc-ci
+            port:
+              number: 80

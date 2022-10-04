@@ -1,0 +1,72 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: red-ingress
+  namespace: red
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+      - red.ko2.com
+    secretName: ko2-certs
+  rules:
+  - host: "red.ko2.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: red-svc-ci
+            port:
+              number: 80
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: green-ingress
+  namespace: green
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+      - green.ko2.com
+    secretName: ko2-certs
+  rules:
+  - host: "green.ko2.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: green-svc-ci
+            port:
+              number: 80
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: blue-ingress
+  namespace: blue
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+      - blue.ko2.com
+    secretName: ko2-certs
+  rules:
+  - host: "blue.ko2.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: blue-svc-ci
+            port:
+              number: 80

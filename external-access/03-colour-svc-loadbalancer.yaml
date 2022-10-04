@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: red
+  name: red-svc-lb
+  namespace: red
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: red
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: green
+  name: green-svc-lb
+  namespace: green
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: green
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: blue
+  name: blue-svc-lb
+  namespace: blue
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: blue

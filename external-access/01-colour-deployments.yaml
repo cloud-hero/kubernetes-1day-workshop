@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: red-deployment
+  namespace: red
+  labels:
+    run: red
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: red
+  template:
+    metadata:
+      labels:
+        run: red
+    spec:
+      containers:
+      - name: red
+        image: cloudhero/rednginx
+        ports:
+        - containerPort: 80
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: green-deployment
+  namespace: green
+  labels:
+    run: green
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: green
+  template:
+    metadata:
+      labels:
+        run: green
+    spec:
+      containers:
+      - name: green
+        image: cloudhero/greennginx
+        ports:
+        - containerPort: 80
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blue-deployment
+  namespace: blue
+  labels:
+    run: blue
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      run: blue
+  template:
+    metadata:
+      labels:
+        run: blue
+    spec:
+      containers:
+      - name: blue
+        image: cloudhero/bluenginx
+        ports:
+        - containerPort: 80

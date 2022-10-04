@@ -1,0 +1,47 @@
+# This is the template used for building and pushing Docker Images to a Docker repo.
+# INPUTS:
+# - image: Image name
+# - tag: Image tag
+# - dockerfile: Dockerfile path within the context
+# - context: Folder where to build the Docker image from
+# - repo: Git repo to pull from
+# - revision: Branch name of tag
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: ci-docker
+spec:
+  templates:
+  - name: ci-docker
+    inputs:
+      parameters:
+      - name: image
+      - name: tag
+      - name: dockerfile
+      - name: context
+      - name: repo
+      - name: revision
+      artifacts:
+      - name: code
+        path: /workspace
+        git:
+          repo: "{{inputs.parameters.repo}}"
+          revision: "{{inputs.parameters.revision}}"
+    container:
+      image: gcr.io/kaniko-project/executor:debug
+      command: [sh, -c]
+      args: 
+        - mkdir -p /kaniko/.docker; 
+          echo "{\"credsStore\":\"ecr-login\"}" > /kaniko/.docker/config.json;
+          cat /kaniko/.docker/config.json;
+          /kaniko/executor --context dir:///workspace/$CONTEXT --dockerfile $DOCKERFILE --destination $IMAGE:$TAG --skip-tls-verify;
+      workingDir: /workspace
+      env:
+      - name: IMAGE
+        value: "{{inputs.parameters.image}}"
+      - name: TAG
+        value: "{{inputs.parameters.tag}}"
+      - name: CONTEXT
+        value: "{{inputs.parameters.context}}"
+      - name: DOCKERFILE
+        value: "{{inputs.parameters.dockerfile}}"
