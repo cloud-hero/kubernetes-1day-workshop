@@ -12,9 +12,9 @@ spec:
     - name: blueTag
       value: blue-1
     - name: image
-      value: 192.168.56.4:5000/rgb-nginx
+      value: 680641864858.dkr.ecr.eu-central-1.amazonaws.com/rgb-nginx
     - name: repo
-      value: "https://github.com/cloud-hero/cncf-ro-demo.git"
+      value: "https://github.com/cloud-hero/kubernetes-1day-workshop.git"
     - name: context
       value: rgb-containers
     - name: revision
