@@ -6,11 +6,11 @@ spec:
   arguments:
     parameters:
     - name: redTag
-      value: red-1
+      value: red-2
     - name: greenTag
-      value: green-1
+      value: green-2
     - name: blueTag
-      value: blue-1
+      value: blue-2
     - name: image
       value: 680641864858.dkr.ecr.eu-central-1.amazonaws.com/rgb-nginx
     - name: repo
@@ -89,6 +89,8 @@ spec:
           template: cd-helm
         arguments:
           parameters:
+            - name: image_repo
+              value: "{{workflow.parameters.image}}"
             - name: tag
               value: "{{workflow.parameters.redTag}}"
             - name: release
@@ -105,6 +107,8 @@ spec:
           template: cd-helm
         arguments:
           parameters:
+            - name: image_repo
+              value: "{{workflow.parameters.image}}"
             - name: tag
               value: "{{workflow.parameters.greenTag}}"
             - name: release
@@ -121,6 +125,8 @@ spec:
           template: cd-helm
         arguments:
           parameters:
+            - name: image_repo
+              value: "{{workflow.parameters.image}}"
             - name: tag
               value: "{{workflow.parameters.blueTag}}"
             - name: release

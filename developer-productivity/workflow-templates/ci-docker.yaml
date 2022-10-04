@@ -33,7 +33,7 @@ spec:
       args: 
         - mkdir -p /kaniko/.docker; 
           echo "{\"credsStore\":\"ecr-login\"}" > /kaniko/.docker/config.json;
-          /kaniko/executor --context dir:///workspace/$CONTEXT --dockerfile $DOCKERFILE --destination $IMAGE:$TAG --skip-tls-verify;
+          /kaniko/executor --context dir:///workspace/$CONTEXT --dockerfile $DOCKERFILE --destination $IMAGE:$TAG;
       workingDir: /workspace
       env:
       - name: IMAGE
