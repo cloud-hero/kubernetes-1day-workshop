@@ -20,7 +20,7 @@ module "eks" {
   vpc_id                = module.vpc.vpc_id
   eks_api_access        = ["0.0.0.0/0"]
   project_name          = var.project_name
-  argo_workflows_sa     = "cicd:argo-workflow"
+  argo_workflows_sa     = "argo:argo-workflow"
   cluster_autoscaler_sa = "kube-system:cluster-autoscaler"
   alb_controller_sa     = "kube-system:aws-load-balancer-controller"
 }

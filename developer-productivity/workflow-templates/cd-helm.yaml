@@ -25,7 +25,7 @@ spec:
       command: [sh, -c]
       args: ["helm repo add $CHART_REPO $CHART_REPO_URL &&
               helm repo update &&
-              helm upgrade --install $RELEASE $CHART_REPO/$CHART --set image.repository=$IMAGE_REPO --set image.tag=$TAG"]
+              helm upgrade --install $RELEASE $CHART_REPO/$CHART --set service.type=LoadBalancer --set image.name=$IMAGE_REPO --set image.tag=$TAG"]
       env:
       - name: TAG
         value: "{{inputs.parameters.tag}}"
