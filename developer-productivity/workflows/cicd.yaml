@@ -6,11 +6,11 @@ spec:
   arguments:
     parameters:
     - name: redTag
-      value: red-2
+      value: red-1
     - name: greenTag
-      value: green-2
+      value: green-1
     - name: blueTag
-      value: blue-2
+      value: blue-1
     - name: image
       value: 680641864858.dkr.ecr.eu-central-1.amazonaws.com/rgb-nginx
     - name: repo
