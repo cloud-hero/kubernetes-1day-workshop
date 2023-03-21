@@ -12,7 +12,7 @@ spec:
     - name: blueTag
       value: blue-1
     - name: image
-      value: 680641864858.dkr.ecr.eu-central-1.amazonaws.com/rgb-nginx
+      value: <image_repo>
     - name: repo
       value: "https://github.com/cloud-hero/kubernetes-1day-workshop.git"
     - name: context
@@ -20,11 +20,11 @@ spec:
     - name: revision
       value: master
     - name: chart
-      value: cncf-chart
+      value: <chart>
     - name: chart_repo
-      value: cncf-charts
+      value: <chart_repo>
     - name: chart_repo_url
-      value: "https://cncf-ro-charts.s3.eu-central-1.amazonaws.com/stable/cncf-chart"
+      value: "<chart_repo_url>"
   entrypoint: app-pipeline
   templates:
   - name: app-pipeline
