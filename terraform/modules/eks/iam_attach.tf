@@ -18,8 +18,14 @@ resource "aws_iam_role_policy_attachment" "cluster_elb" {
   policy_arn = aws_iam_policy.elb.arn
 }
 
-resource "aws_iam_role_policy_attachment" "argo_workflows" {
+resource "aws_iam_role_policy_attachment" "argo_workflows_ecr" {
   # Indexed with 0 becase of the count argument inside the resource.
   role       = aws_iam_role.argo_workflows[0].name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser"
+}
+
+resource "aws_iam_role_policy_attachment" "argo_workflows_s3" {
+  # Indexed with 0 becase of the count argument inside the resource.
+  role       = aws_iam_role.argo_workflows[0].name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
 }
