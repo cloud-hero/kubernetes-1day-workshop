@@ -264,6 +264,7 @@ controller:
     - green
     - blue
     - colour
+    - argo
 
   instanceID:
     # -- Configures the controller to filter workflow submissions
