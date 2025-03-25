@@ -11,3 +11,8 @@ chmod 700 get_helm.sh
 ./get_helm.sh
 
 helm plugin install https://github.com/hypnoglow/helm-s3.git
+
+curl -sLO https://github.com/argoproj/argo-workflows/releases/download/v3.5.5/argo-linux-amd64.gz
+gunzip argo-linux-amd64.gz
+chmod +x argo-linux-amd64
+sudo mv ./argo-linux-amd64 /usr/local/bin/argo
