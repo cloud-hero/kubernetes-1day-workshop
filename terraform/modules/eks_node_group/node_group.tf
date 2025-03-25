@@ -11,6 +11,8 @@ resource "aws_eks_node_group" "this" {
     min_size     = var.scaling_config["min_size"]
   }
 
+  ami_type = "BOTTLEROCKET_x86_64"
+
   labels = var.eks_labels
 
   dynamic "taint" {
