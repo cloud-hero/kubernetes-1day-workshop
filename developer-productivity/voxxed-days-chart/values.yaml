@@ -1,0 +1,11 @@
+replicas: 3
+image:
+  name: nginx
+  tag: latest
+container:
+  name: nginx
+  port: 80
+service:
+  port: 80
+  protocol: TCP
+  type: ClusterIP
